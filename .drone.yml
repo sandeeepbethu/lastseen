@@ -1,0 +1,23 @@
+pipeline:
+
+  build_code:
+    when:
+      branch: master
+      event: [push, pull_request]
+    image: openjdk:8-jdk
+    commands:
+      - ./gradlew clean build
+
+  deploy_code_to_binrepo:
+    when:
+      branch: master
+      event: push
+    image: plugins/docker:latest
+    secrets: [ docker_username, docker_password ]
+    registry: docker.reliancejio.com
+    certificate_authority_url: http://browserconfig.reliancejio.com/jio-certs/jio-ca-bundle.crt
+    repo: docker.reliancejio.com/assessment/lastseen/dev
+    tag:
+      - latest
+      - "b${DRONE_BUILD_NUMBER}-${DRONE_COMMIT:0:8}"
+    Dockerfile: Dockerfile

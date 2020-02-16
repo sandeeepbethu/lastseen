@@ -1,0 +1,21 @@
+server.port: 8080
+
+server:
+  servlet:
+    context-path: /activities
+
+spring:
+  profiles:
+    active: dev
+---
+dev:
+  person_list:
+    - "a"
+    - "b"
+    - "c"
+    - "d"
+  last_visited_list:
+    - "2020/02/14 10:00:00"
+    - "2019/02/14 10:00:00"
+    - "2020/01/14 10:00:00"
+    - "2020/02/15 10:00:00"
